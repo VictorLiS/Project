@@ -1,0 +1,10 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  config:
+    import: application-prod.yml
+  application:
+    name: simple-sql-database
+server:
+  port: 8081
