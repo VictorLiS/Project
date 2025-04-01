@@ -3,7 +3,6 @@ package com.dyx.simpledb.backend.vm;
 import com.dyx.simpledb.backend.tm.TransactionManager;
 
 public class Visibility {
-
     public static boolean isVersionSkip(TransactionManager tm, Transaction t, Entry e) {
         long xmax = e.getXmax();
 

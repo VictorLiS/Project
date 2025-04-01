@@ -102,15 +102,23 @@ public class Entry {
 
     // 判断是否 可清理
     public boolean isGarbage(Set<Long> activeXids) {
+        long xmin = getXmin();
         long xmax = getXmax();
-        // 说明未被删除，不是垃圾
+
+        // 条件1：未被删除（XMAX == 0），说明还有可能被读取，不能清理
         if (xmax == 0) return false;
 
-        // 被标记删除，但仍有活跃事务可能读取
+        // 条件2：创建事务或删除事务仍活跃，说明可能还有事务能看到该版本
+        if (activeXids.contains(xmin) || activeXids.contains(xmax)) {
+            return false;
+        }
+
+        // 条件3：确保所有活跃事务的 XID 都 > XMAX，才说明没有人会再看到这个版本
         for (Long xid : activeXids) {
             if (xid <= xmax) return false;
         }
 
-        return true; // 已被删除，且所有活跃事务看不到
+        return true; // 安全清理：已被删除、创建和删除事务都结束、无活跃事务可见
     }
+
 }

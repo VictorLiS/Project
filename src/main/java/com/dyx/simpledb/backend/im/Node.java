@@ -15,9 +15,9 @@ import com.dyx.simpledb.backend.utils.Parser;
  * [Son0][Key0][Son1][Key1]...[SonN][KeyN]
  */
 public class Node {
-    static final int IS_LEAF_OFFSET = 0;
-    static final int NO_KEYS_OFFSET = IS_LEAF_OFFSET+1;
-    static final int SIBLING_OFFSET = NO_KEYS_OFFSET+2;
+    static final int IS_LEAF_OFFSET = 0; // 是否叶子节点
+    static final int NO_KEYS_OFFSET = IS_LEAF_OFFSET+1; // 键数量
+    static final int SIBLING_OFFSET = NO_KEYS_OFFSET+2; // 右兄弟节点的 UID
     static final int NODE_HEADER_SIZE = SIBLING_OFFSET+8;
 
     static final int BALANCE_NUMBER = 32;
@@ -358,5 +358,4 @@ public class Node {
         }
         return sb.toString();
     }
-
 }
